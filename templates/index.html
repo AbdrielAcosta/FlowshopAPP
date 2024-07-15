@@ -12,30 +12,25 @@
             padding: 0;
             background-color: #f0f0f0;
         }
-
         h1 {
             text-align: center;
             color: #333;
         }
-
         form {
             margin-bottom: 20px;
             text-align: center;
         }
-
         label {
             display: inline-block;
             width: 200px;
             margin-right: 10px;
             text-align: right;
         }
-
         input[type="number"] {
             width: 100px;
             padding: 5px;
             margin-bottom: 10px;
         }
-
         button {
             padding: 10px 20px;
             background-color: #4CAF50;
@@ -43,11 +38,9 @@
             border: none;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #45a049;
         }
-
         #resultados {
             background-color: #fff;
             padding: 10px;
@@ -55,7 +48,6 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
         #grafica {
             margin-top: 20px;
             text-align: center;
@@ -64,12 +56,10 @@
 </head>
 <body>
     <h1>Flowshop</h1>
-
     <form id="uploadForm">
         <input type="file" id="fileInput" />
         <button type="submit">Cargar Datos desde TXT</button>
     </form>
-
     <label for="cant_t1">Cantidad de Tarima 1:</label>
     <input type="number" id="cant_t1"><br/>
     <label for="cant_t2">Cantidad de Tarima 2:</label>
@@ -77,18 +67,14 @@
     <label for="cant_t3">Cantidad de Tarima 3:</label>
     <input type="number" id="cant_t3"><br/>
     <button onclick="calcularSecuencia()">Calcular Secuencia</button>
-
     <div id="resultados"></div>
-
     <div id="grafica"></div>
-
     <script>
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const fileInput = document.getElementById('fileInput');
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
-
             axios.post('/cargar_txt', formData)
                 .then(response => {
                     alert(response.data.message);
@@ -97,12 +83,10 @@
                     alert(error.response.data.error);
                 });
         });
-
         function calcularSecuencia() {
             const cant_t1 = document.getElementById('cant_t1').value;
             const cant_t2 = document.getElementById('cant_t2').value;
             const cant_t3 = document.getElementById('cant_t3').value;
-
             axios.post('/calcular_secuencia', {
                 cant_t1: cant_t1,
                 cant_t2: cant_t2,
@@ -116,13 +100,11 @@
                     <p><strong>Tiempo inicio:</strong> ${result.tiempo_inicio}</p>
                     <p><strong>Tiempo final:</strong> ${result.tiempo_final}</p>
                 `;
-                
                 const graficaImg = document.createElement('img');
                 graficaImg.src = result.grafica;
                 graficaImg.style.maxWidth = '100%';
                 document.getElementById('grafica').innerHTML = '';
                 document.getElementById('grafica').appendChild(graficaImg);
-
             })
             .catch(error => {
                 alert(error.response.data.error);
